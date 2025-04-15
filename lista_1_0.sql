@@ -17,18 +17,18 @@
 -- Dica: Devemos adotar um padrão de nomenclatura para índices únicos. Ex: unq_tabela__campo1__campo2. 
 
 -- 3) Altere a tabela acima adicionando o campo data_cadastro do tipo DATE e um campo chamado principio. Ex: O princípio ativo da Novalgina é dipirona.   
-    USE farmacia;
-    ALTER TABLE medicamento 
-    ADD COLUMN data_cadastro DATE, 
-    ADD COLUMN principio VARCHAR(20);
+USE farmacia;
+ALTER TABLE medicamento 
+ADD COLUMN data_cadastro DATE, 
+ADD COLUMN principio VARCHAR(20);
 
 -- 4) Use a função now() para preencher a data_cadastro de todos os medicamentos. 
-   USE farmacia;
-   ALTER TABLE medicamento CHANGE COLUMN data_cadastro data_cadastro DATE NOT NULL DEFAULT now(); 
+USE farmacia;
+ALTER TABLE medicamento CHANGE COLUMN data_cadastro data_cadastro DATE NOT NULL DEFAULT now(); 
 
 -- 5) Altere a coluna principio para principio_ativo.  
-	USE farmacia;
-    ALTER TABLE medicamento CHANGE COLUMN principio principio_ativo VARCHAR(40) NOT NULL;
+USE farmacia;
+ALTER TABLE medicamento CHANGE COLUMN principio principio_ativo VARCHAR(40) NOT NULL;
 
 -- 6) Faça as seguintes inserções na tabela criada: 
 USE farmacia;
@@ -65,7 +65,6 @@ FROM medicamento
 WHERE estoque > 20 
   AND LEFT(descricao, 1) IN ('A', 'B', 'C', 'N');
 
-
 -- 11) Crie uma coluna chamada margem_de_lucro de preenchimento obrigatório e valor default 42.87. 
 USE farmacia;
 ALTER TABLE medicamento ADD COLUMN margem_de_lucro DECIMAL(9,2) NOT NULL DEFAULT 42.87;
@@ -85,4 +84,9 @@ SELECT DISTINCT principio_ativo
 FROM medicamento
 ORDER BY principio_ativo;
 
--- 14) Escreva uma consulta que retorne a descrição e a data de cadastro de todos os medicamentos no formato brasileiro (dia/mês/ano). Proibido utilizar funções de data.   
+-- 14) Escreva uma consulta que retorne a descrição e a data de cadastro de todos os medicamentos no formato brasileiro (dia/mês/ano). Proibido utilizar funções de data.
+USE farmacia;
+SELECT descricao, 
+CONCAT(SUBSTRING(data_cadastro,9,2), '/', SUBSTRING(data_cadastro,6,2), '/', SUBSTRING(data_cadastro,1,4) ) as data_br 
+FROM medicamento
+ORDER BY principio_ativo;   
